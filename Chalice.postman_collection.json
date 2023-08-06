@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "0ab4eec7-df46-41c3-b16b-b51517d75212",
+		"name": "Chalice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1080006"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Username is present and set to username collection variable\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.username).to.exist;",
+									"    pm.collectionVariables.set(\"username\", jsonData.username);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{$randomUserName}}\",\n    \"name\": \"{{$randomFullName}}\",\n    \"password\": \"asdf4567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set response to collection variable\", function () {",
+									"    pm.collectionVariables.set(\"token\", pm.response.json().token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"asdf4567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Return username is equal to collection variable username\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.username).to.eql(pm.variables.get(\"username\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/me/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "operation",
+			"item": [
+				{
+					"name": "operation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Retrieve the response body",
+									"var responseBody = pm.response.json();",
+									"",
+									"// Check if the response body is an array and not empty",
+									"if (Array.isArray(responseBody) && responseBody.length > 0) {",
+									"    // Get the UID from the first item in the array",
+									"    var uid = responseBody[0].uid;",
+									"",
+									"    // Set the UID to a collection variable",
+									"    pm.collectionVariables.set(\"uid_operation\", uid);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/operation/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"operation",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "operation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"// Set the uid value from the response to a collection variable",
+									"var responseData = pm.response.json();",
+									"pm.collectionVariables.set(\"uid_operation\", responseData.uid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticker\": \"{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}11\",\n    \"date\": \"2023-07-01\",\n    \"price_unit\": {{$randomPrice}},\n    \"qtd\": {{$randomInt}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/operation/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"operation",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "operation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"// Set the uid value from the response to a collection variable",
+									"var responseData = pm.response.json();",
+									"pm.collectionVariables.set(\"uid_operation\", responseData.uid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-07-03\",\n    \"price_unit\": {{$randomPrice}},\n    \"qtd\": {{$randomInt}},\n    \"ticker\": \"XXX\",\n    \"username\":\"yyyy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/operation/{{uid_operation}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"operation",
+								"{{uid_operation}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "operation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/operation/{{uid_operation}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"operation",
+								"{{uid_operation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "position",
+			"item": [
+				{
+					"name": "position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Retrieve the response body",
+									"var responseBody = pm.response.json();",
+									"",
+									"// Check if the response body is an array and not empty",
+									"if (Array.isArray(responseBody) && responseBody.length > 0) {",
+									"    // Get the UID from the first item in the array",
+									"    var uid = responseBody[0].uid;",
+									"",
+									"    // Set the UID to a collection variable",
+									"    pm.collectionVariables.set(\"uid_position\", uid);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/position/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"position",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"// Set the uid value from the response to a collection variable",
+									"var responseData = pm.response.json();",
+									"pm.collectionVariables.set(\"uid_position\", responseData.uid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticker\": \"{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}11\",\n    \"price_unit\": {{$randomPrice}},\n    \"qtd\": {{$randomInt}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/position/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"position",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"// Set the uid value from the response to a collection variable",
+									"var responseData = pm.response.json();",
+									"pm.collectionVariables.set(\"uid_operation\", responseData.uid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-07-01\",\n    \"price_unit\": {{$randomPrice}},\n    \"qtd\": {{$randomInt}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/position/{{uid_position}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"position",
+								"{{uid_position}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/position/{{uid_position}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"position",
+								"{{uid_position}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8010/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "development",
+			"type": "string"
+		},
+		{
+			"key": "dev_url",
+			"value": "https://0oz1nx16id.execute-api.us-east-1.amazonaws.com/api/",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "uid",
+			"value": ""
+		},
+		{
+			"key": "uid_operation",
+			"value": ""
+		},
+		{
+			"key": "uid_position",
+			"value": ""
+		}
+	]
+}

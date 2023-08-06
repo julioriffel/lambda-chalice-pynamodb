@@ -1,0 +1,24 @@
+{
+    "version": "2.0",
+    "app_name": "lambda_chalice_pynamodb",
+    "region": "us-east-1",
+    "environment_variables": {
+        "BACKEND_DEBUG": "True",
+        "DB_URL": "http://dynamodb.us-east-1.amazonaws.com",
+        "JWT_SECRET": "<JWT_SECRET>"
+    },
+    "stages": {
+        "dev": {
+            "autogen_policy": false,
+            "api_gateway_stage": "api"
+        },
+        "prod": {
+            "autogen_policy": false,
+            "api_gateway_stage": "api",
+            "environment_variables": {
+                "DB_EVENT_TABLE_NAME": "prod_event",
+                "DB_LOCK_TABLE_NAME": "prod_lock"
+            }
+        }
+    }
+}
